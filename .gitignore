@@ -5,3 +5,4 @@ backend/.env
 dist/
 frontend/dist/
 extraFile.txt
+personalReadMe.md

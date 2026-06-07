@@ -1,17 +1,47 @@
-require("dotenv").config();
+const express = require('express');
+const cors = require('cors');
+const db = require('./db');
+require('dotenv').config();
 
-const http = require("http");
-const { neon } = require("@neondatabase/serverless");
+const PORT = process.env.PORT || 5000;
+const app = express();
 
-const sql = neon(process.env.DATABASE_URL);
+app.use(cors());
+app.use(express.json());
 
-const requestHandler = async (req, res) => {
-  const result = await sql`SELECT version()`;
-  const { version } = result[0];
-  res.writeHead(200, { "Content-Type": "text/plain" });
-  res.end(version);
-};
+const userRoutes = require('./routes/userRoutes');
+const snippetRoutes = require('./routes/snippetRoutes');
+const tagRoutes = require('./routes/tagRoutes');
 
-http.createServer(requestHandler).listen(3000, () => {
-  console.log("Server running at http://localhost:3000");
+
+app.use('/api/users', userRoutes);
+app.use('/api/snippets', snippetRoutes);
+app.use('/api/tags', tagRoutes);
+
+
+// Test Connection Route
+// app.get("/api/test-db", async (req, res) => {
+//   try {
+//     // This query tests if your tables exist by pulling your user records
+//     const result = await db.query("SELECT * FROM users;");
+    
+//     res.status(200).json({
+//       message: "Successfully connected to PostgreSQL via Neon!",
+//       userCount: result.rowCount,
+//       data: result.rows, // This will contain the test user you seeded earlier
+//     });
+//   } catch (err) {
+//     console.error("Database connection error:", err.message);
+//     res.status(500).json({ error: "Database query failed", details: err.message });
+//   }
+// });
+
+// Basic Root Route
+app.get("/", (req, res) => {
+  res.send("GitShare API Server is running smoothly.");
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server is happily humming on port ${PORT}`);
 });
