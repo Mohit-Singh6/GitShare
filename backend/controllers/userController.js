@@ -1,10 +1,6 @@
-const express = require('express');
-const app = express();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const dotenv = require('dotenv');
 const db = require('../db');
-dotenv.config();
 
 
 dotenv.config();
@@ -45,7 +41,7 @@ exports.login = async (req, res) => {
         if (user.rows.length > 0) {
             if (await bcrypt.compare(req.body.password, user.rows[0].password_hash)) {
 
-                const userPayload = { id: user.rows[0].id, username: user.rows[0].username };
+                const userPayload = { user_id: user.rows[0].id, username: user.rows[0].username };
                 const accessToken = jwt.sign(userPayload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '24h'});
 
                 res.status(200).json({
