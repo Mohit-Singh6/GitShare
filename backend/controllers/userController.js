@@ -1,14 +1,11 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const db = require('../db');
-
+const dotenv = require('dotenv');
 
 dotenv.config();
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json()); 
 
-
-exports.register = async (req, res) => {
+const register = async (req, res) => {
     try {
         const user = { username: req.body.username, password: req.body.password };
         const alreadyPresent = await db.query("SELECT * FROM users WHERE username = $1", [user.username]);
@@ -33,16 +30,19 @@ exports.register = async (req, res) => {
 }
 
 
-exports.login = async (req, res) => {
+const login = async (req, res) => {
 
     // authenticate user here
     try {
+        console.log("USER: ", req.body.username);
+        console.log("ACCESS_TOKEN_SECRET: ", process.env.ACCESS_TOKEN_SECRET);
         const user = await db.query("SELECT * FROM users WHERE username = $1", [req.body.username]);
         if (user.rows.length > 0) {
             if (await bcrypt.compare(req.body.password, user.rows[0].password_hash)) {
 
-                const userPayload = { user_id: user.rows[0].id, username: user.rows[0].username };
-                const accessToken = jwt.sign(userPayload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '24h'});
+                const userPayload = { user_id: user.rows[0].user_id, username: user.rows[0].username };
+                console.log("User Payload for JWT: ", userPayload);
+                const accessToken = await jwt.sign(userPayload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '24h'});
 
                 res.status(200).json({
                     accessToken: accessToken,
@@ -60,3 +60,5 @@ exports.login = async (req, res) => {
         res.status(500).send("Went wrong something.");
     }
 }
+
+module.exports = { register, login };

@@ -11,11 +11,11 @@ app.use(express.json());
 
 const userRoutes = require('./routes/userRoutes');
 const snippetRoutes = require('./routes/snippetRoutes');
-const tagRoutes = require('./routes/tagRoutes');
+// const tagRoutes = require('./routes/tagRoutes');
 
 app.use('/api/users', userRoutes);
 app.use('/api/snippets', snippetRoutes);
-app.use('/api/tags', tagRoutes);
+// app.use('/api/tags', tagRoutes);
 
 
 // Test Connection Route

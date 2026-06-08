@@ -6,7 +6,9 @@ const protect = async (req, res, next) => {
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
     try {
       token = req.headers.authorization.split(' ')[1];
-      const decoded = jwt.verify(token, process.env.TOKEN_SECRET || 'secret');
+    //   console.log("Token: ", token);
+      const decoded = await jwt.verify(token, process.env.ACCESS_TOKEN_SECRET || 'secret');
+      console.log("Decoded JWT Payload: ", decoded);
     
       req.user = {
         user_id: decoded.user_id,

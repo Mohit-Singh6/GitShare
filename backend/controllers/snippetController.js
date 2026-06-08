@@ -19,10 +19,12 @@ exports.getAllSnippets = async (req, res) => {
 exports.createSnippet = async (req, res) => {
     try {
         // req.user was securely populated by your protect middleware!
-        const user = { user_id: req.user.user_id, username: req.user.username };
+        const user = await { user_id: req.user.user_id, username: req.user.username };
+        console.log("Authenticated User in createSnippet:", user);
         const { title, code_content, tags } = req.body; // tags is an array: ['react', 'node']
 
         // 1. Insert the snippet and capture the new snippet row
+        console.log("User.user_id: ", user.user_id);
         const newSnippet = await db.query(
             "INSERT INTO snippets (user_id, title, code_content) VALUES ($1, $2, $3) RETURNING *", 
             [user.user_id, title, code_content]
@@ -65,7 +67,9 @@ exports.createSnippet = async (req, res) => {
 exports.getSnippetByTag = async (req, res) => {
     try {
         const userId = req.user.user_id;
-        const { tagName } = req.params; // Expects a URL parameter like /api/snippets/tag/react
+        console.log("req.params: ", req.params);
+        const { tag } = req.params; // Expects a URL parameter like /api/snippets/tag/react
+        console.log("tag: ", tag);
 
         const query = `
             SELECT s.* FROM snippets s
@@ -74,10 +78,10 @@ exports.getSnippetByTag = async (req, res) => {
             WHERE t.tag_name = $1 AND s.user_id = $2;
         `;
 
-        const result = await db.query(query, [tagName, userId]);
+        const result = await db.query(query, [tag, userId]);
 
         res.status(200).json({
-            message: `Snippets tagged with #${tagName} fetched successfully!`,
+            message: `Snippets tagged with #${tag} fetched successfully!`,
             count: result.rowCount,
             snippets: result.rows
         });
