@@ -4,6 +4,7 @@ import SnippetCard from '../components/SnippetCard'
 import Icon from '../globalComponents/Icon'
 import { navTags } from '../data/snippets'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import '../styles/GitShareDashboard.css'
 import '../styles/UserAuth.css'
 
@@ -13,12 +14,14 @@ function GitShareDashboard() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const navigate = useNavigate(); // this should be placed at the top of the component, before any conditional logic that might use it to avoid issues with hooks being called conditionally otherwise the navigate function might not be available when you try to use it for redirection after login or if the user is not authenticated. By placing it at the top, you ensure that it's always initialized and ready to be used whenever needed in the component.
+
 
   const handleRegister = async () => {
     try {
         setLoading(true);
         const backendUrl = import.meta.env.VITE_BACKEND_URL;
-        const result = await axios.post(`${backendUrl}/user/register`, {
+        const result = await axios.post(`${backendUrl}/users/register`, {
             username,
             password
         });
@@ -37,24 +40,21 @@ function GitShareDashboard() {
     try {
         setLoading(true);
         const backendUrl = import.meta.env.VITE_BACKEND_URL;
-        const result = await axios.post(`${backendUrl}/user/login`, {
+        const result = await axios.post(`${backendUrl}/users/login`, {
             username,
             password
         });
         console.log("Login response:", result.data);
-        res.status(200).send("Login successful!");
         localStorage.setItem('token', result.data.accessToken);
 
         console.log("Login successful, token stored:", result.data.accessToken);
 
         setLoading(false);
         // Redirect to dashboard after successful login
-        const navigate = useNavigate();
         navigate('/');
     }
     catch (err) {
         console.error("Login error:", err);
-        res.json({"error": "Login failed"});
         setLoading(false);
     }
   }

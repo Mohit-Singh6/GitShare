@@ -3,11 +3,14 @@ import CodeBlock from './CodeBlock'
 import TagBadge from './TagBadge'
 import './SnippetCard.css'
 
-function SnippetCard({ title, code, tags, date }) {
+function SnippetCard({ id, title, code, date }) {
+
+  const formattedDate = new Date(date).toLocaleString();
+
   return (
     <article className="snippet-card">
       <div className="snippet-card__header">
-        <h3 className="snippet-card__title">{title}</h3>
+        <h3 className="snippet-card__title">{id}. {title}</h3>
         <div className="snippet-card__actions">
           <button
             type="button"
@@ -29,13 +32,8 @@ function SnippetCard({ title, code, tags, date }) {
       <CodeBlock code={code} />
 
       <div className="snippet-card__footer">
-        <div className="snippet-card__tags">
-          {tags.map((tag) => (
-            <TagBadge key={tag.label} label={tag.label} variant={tag.variant} />
-          ))}
-        </div>
         <time className="snippet-card__date" dateTime={date}>
-          {date}
+          {formattedDate}
         </time>
       </div>
     </article>

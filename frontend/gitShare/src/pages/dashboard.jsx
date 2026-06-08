@@ -115,10 +115,9 @@ function GitShareDashboard() {
         <main className="dashboard__grid">
           {snippets.map((snippet) => (
             <SnippetCard
-              key={snippet.id}
+              id={snippet.id}
               title={snippet.title}
               code={snippet.code_content}
-              tags={snippet.tags}
               date={snippet.created_at}
             />
           ))}
