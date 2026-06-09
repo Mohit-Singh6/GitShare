@@ -33,6 +33,10 @@
   padding: 20px 16px 16px;
 }
 
+.sidebar__cta:hover {
+  cursor: pointer;
+}
+
 .sidebar__new-btn {
   display: flex;
   align-items: center;
@@ -80,15 +84,23 @@
   align-items: center;
   gap: 4px;
   padding: 8px 12px;
+  margin-bottom: 2px;
   border: none;
   border-radius: var(--radius-md);
-  background: transparent;
+  background-color:rgba(0, 213, 255, 0.01);
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 500;
   color: var(--color-muted-foreground);
   text-align: left;
   cursor: default;
+}
+
+.sidebar__nav-item:hover {
+  background-color:rgba(0, 213, 255, 0.169);
+  color: white;
+  cursor: pointer;
+
 }
 
 .sidebar__nav-item--active {

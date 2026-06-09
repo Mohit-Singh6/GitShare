@@ -39,11 +39,11 @@ function CreateSnippet() {
             code_content,
             tags: tagsArray
         },
-          {
+        {
             headers: {
-              'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`
             }
-          });
+        });
         
         // redirect to dashboard page after successful snippet creation
         navigate('/');

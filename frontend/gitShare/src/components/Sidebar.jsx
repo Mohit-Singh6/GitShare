@@ -3,7 +3,7 @@ import UserAvatar from '../globalComponents/UserAvatar'
 import { useNavigate } from 'react-router-dom';
 import './Sidebar.css'
 
-function Sidebar({ tags, username }) {
+function Sidebar({ tags, username, onTagClick }) {
   // const [tags, setTags] = useState(tags);
 
   const navigate = useNavigate();
@@ -30,12 +30,13 @@ function Sidebar({ tags, username }) {
         <p className="sidebar__nav-label">Tags</p>
         {tags.map((tag) => (
           <button
-            key={tag.label}
+            key={tag.tag_name}
             type="button"
             className={`sidebar__nav-item${tag.active ? ' sidebar__nav-item--active' : ''}`}
             aria-current={tag.active ? 'page' : undefined}
+            onClick={() => onTagClick(tag.tag_name)}
           >
-            {tag.label}
+            # {tag.tag_name}
           </button>
         ))}
       </nav>

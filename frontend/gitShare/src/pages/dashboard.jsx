@@ -91,10 +91,26 @@ function GitShareDashboard() {
     }
   }
 
+  const getSnippetsByTag = async (tag) => {
+    try {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
+      const result = await axios.get(`${backendUrl}/snippets/tag/${tag}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      setSnippets(result.data.snippets);
+      console.log(`Fetched snippets by tag #${tag}:`, result.data.snippets);
+    }
+    catch (err) {
+      console.error(`Error fetching snippets by tag #${tag}:`, err);
+    }
+  }
+
 
   return (
     <div className="dashboard">
-      <Sidebar tags={tags} username="dev_santos" />
+      <Sidebar tags={tags} username="dev_santos" onTagClick={getSnippetsByTag}/>
 
       <div className="dashboard__main">
         <header className="dashboard__header">
