@@ -53,6 +53,8 @@
 .sidebar__new-btn:focus-visible {
   outline: 2px solid var(--color-foreground);
   outline-offset: 2px;
+  background-color: white;
+  cursor: pointer;
 }
 
 .sidebar__nav {

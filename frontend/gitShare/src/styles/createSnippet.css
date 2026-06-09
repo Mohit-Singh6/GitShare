@@ -1,0 +1,79 @@
+.dashboard__main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* center vertically */
+  padding: 40px;
+}
+
+.dashboard__auth-container {
+  width: 100%;
+  max-width: 550px;
+  padding: 32px;
+  background: #18181b;
+  border: 1px solid #2f2f35;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dashboard__auth-title {
+  color: #fff;
+  font-size: 1.5rem; /* was 2rem */
+  font-weight: 600;
+  margin: 0;
+}
+
+.dashboard__auth-toggle {
+  color: #a1a1aa;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0;
+}
+
+.dashboard__auth-toggle-btn {
+  background: transparent;
+  border: none;
+  color: #1ec8f0;
+  cursor: pointer;
+  margin-left: 4px;
+  font-size: 14px;
+  font-weight: 400; /* was 600 */
+  padding: 0;
+}
+
+.dashboard__auth-submit-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background: #1ec8f0;
+  color: #111;
+  font-size: 15px;
+  font-weight: 500; /* was 700 */
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.dashboard__auth-input {
+  width: 100%;
+  padding: 14px 16px;
+  background: #222327;
+  border: 1px solid #35363b;
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+  outline: none;
+  transition: 0.2s ease;
+  box-sizing: border-box;
+
+}
+
+.dashboard__auth-input::placeholder {
+  color: #8b8d97;
+}
+
+.dashboard__auth-input:focus {
+  border-color: #1ec8f0;
+}

@@ -1,8 +1,17 @@
 import Icon from '../globalComponents/Icon'
 import UserAvatar from '../globalComponents/UserAvatar'
+import { useNavigate } from 'react-router-dom';
 import './Sidebar.css'
 
 function Sidebar({ tags, username }) {
+  // const [tags, setTags] = useState(tags);
+
+  const navigate = useNavigate();
+
+  const handleNewSnippet = () => {
+    navigate('/create');
+  }
+
   return (
     <aside className="sidebar" aria-label="Sidebar navigation">
       <div className="sidebar__brand">
@@ -11,7 +20,7 @@ function Sidebar({ tags, username }) {
       </div>
 
       <div className="sidebar__cta">
-        <button type="button" className="sidebar__new-btn">
+        <button type="button" className="sidebar__new-btn" onClick={handleNewSnippet}>
           <Icon name="plus" size={15} />
           New Snippet
         </button>

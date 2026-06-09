@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/GitShareDashboard.css'
 import '../styles/UserAuth.css'
 
-function GitShareDashboard() {
+function UserAuth() {
   const [registering, setRegistering] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -103,4 +103,4 @@ function GitShareDashboard() {
   )
 }
 
-export default GitShareDashboard;
+export default UserAuth;

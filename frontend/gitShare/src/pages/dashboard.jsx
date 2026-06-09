@@ -2,15 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar'
 import SnippetCard from '../components/SnippetCard'
 import Icon from '../globalComponents/Icon'
-import { navTags } from '../data/snippets'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/GitShareDashboard.css'
 
 function GitShareDashboard() {
   const [snippets, setSnippets] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [tags, setTags] = useState([]);
   const [searchId, setSearchId] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const token = localStorage.getItem('token');
   if (!token) {
@@ -21,6 +21,7 @@ function GitShareDashboard() {
 
   useEffect(() => {
     getAllSnippets();
+    getAllTags();
   }, []) // By wrapping it in useEffect with an empty dependency array [] at the bottom, you are telling React:
 
     // "Run this function exactly one time when this component first pops up on the screen, and then never run it again until the user refreshes the page."
@@ -72,9 +73,28 @@ function GitShareDashboard() {
     }
   }
 
+  const getAllTags = async () => {
+    try {
+      const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+      const result = await axios.get(`${backendUrl}/tags`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      setTags(result.data.tags);
+      console.log("Fetched tags:", result.data.tags);
+    }
+    catch (err) {
+      console.log("Error fetching all tags:", err);;
+    }
+  }
+
+
   return (
     <div className="dashboard">
-      <Sidebar tags={navTags} username="dev_santos" />
+      <Sidebar tags={tags} username="dev_santos" />
 
       <div className="dashboard__main">
         <header className="dashboard__header">
